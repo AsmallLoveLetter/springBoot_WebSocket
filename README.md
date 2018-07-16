@@ -1,9 +1,9 @@
 #SpringbootWebSocket
 
-SpringBoot整合Websocket，实现广播式和给特定用户发送消息，不需要登录即可发送消息。
+SpringBoot整合Websocket，实现广播式和给特定用户发送消息，不需要登录即可发送消息。使用Jbox插件发送消息
 
 # 示例
->  演示的发送消息需要两个用户同时开启，因为写的是相互发送消息。切记
+> 登录1用户 2用户进入页面默认连接 实现给不同页面的相同用户发送消息
 
 ## 主页
 
@@ -18,7 +18,7 @@ SpringBoot整合Websocket，实现广播式和给特定用户发送消息，不�
  
   
 ## rickyt2用户 
-> 进入之后，先点击连接connect，输入sendName即可发送消息 
+> 进入之后，，输入sendName即可发送消息 
 
  ![](/src/main/resources/static/image/rickyt2.png)
  
@@ -28,3 +28,5 @@ SpringBoot整合Websocket，实现广播式和给特定用户发送消息，不�
  
 #说明
  > 用户的key是从页面传递过来的，发送给特殊用户的key也是从页面传递的，如果想给特定用户发送消息，可以实现相关功能，这里只做演示，所以写死了。
+ 
+ 
