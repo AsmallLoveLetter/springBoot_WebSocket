@@ -42,6 +42,15 @@ public class GreetingController {
     public  String ToMessaget2(){
         return "/messaget2";
     }
+    @RequestMapping(value = "/msg/messaget3")
+    public  String ToMessaget3(){
+        return "/messaget3";
+    }
+
+    @RequestMapping("/msg/workorder")
+    public String ToWorkOrder() {
+        return "/workorder";
+    }
 
     /**
      * 用户广播
@@ -79,9 +88,26 @@ public class GreetingController {
         Map<String,String> params = new HashMap(1);
         params.put("test","test");
         //这里没做校验
-        String sessionId=webAgentSessionRegistry.getSessionIds(message.getId()).stream().findFirst().get();
-        template.convertAndSendToUser(sessionId,"/topic/greetings",new OutMessage("single send to："+message.getId()+", from:" + message.getName() + "!"),createHeaders(sessionId));
+
+       if(!webAgentSessionRegistry.getSession(message.getId())){
+            webAgentSessionRegistry.putMessageMap(message.getId(),message.getName());
+            return;
+        }
+        /*String sessionId=webAgentSessionRegistry.getSessionIds(message.getId()).stream().findFirst().get();
+        template.convertAndSendToUser(sessionId,"/topic/greetings",new OutMessage("single send to："+message.getId()+", from:" + message.getName() + "!"),createHeaders(sessionId));*/
+        //使用循环针对同一用户登录多次的情况
+        webAgentSessionRegistry.getSessionIds(message.getId()).stream().forEach(sessionId ->{
+            try {
+                template.convertAndSendToUser(sessionId,"/topic/greetings",new OutMessage("订单" + message.getName()),createHeaders(sessionId));
+            }catch (Exception x){
+                x.printStackTrace();
+            }
+
+        });
+
     }
+
+
     private MessageHeaders createHeaders(String sessionId) {
         SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
         headerAccessor.setSessionId(sessionId);

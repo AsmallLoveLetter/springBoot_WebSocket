@@ -25,20 +25,10 @@ public class CustomMVCConfiguration extends WebMvcConfigurerAdapter {
         super.addViewControllers( registry );
     }
 
-    @Override
-    public void configureContentNegotiation(
-            ContentNegotiationConfigurer configurer) {
-        configurer.favorPathExtension(false);
-    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-         //设置webjars资源路径
-        if (!registry.hasMappingForPattern("/webjars/**")) {
-            registry.addResourceHandler("/webjars/**").addResourceLocations(
-                    "classpath:/META-INF/resources/webjars/");
-        }
-        super.addResourceHandlers(registry);
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
     }
-
 
 }

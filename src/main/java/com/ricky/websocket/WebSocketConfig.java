@@ -16,7 +16,9 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
+        //服务端发送消息给客户端的域,多个用逗号隔开
         config.enableSimpleBroker("/topic");// /users 默认通知
+        //定义websoket前缀
         config.setApplicationDestinationPrefixes("/app");
         //设置前缀  默认是user 可以修改  点对点时使用
         config.setUserDestinationPrefix("/ricky/");
@@ -24,6 +26,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
+             //注册一个Stomp的节点（endpoint）,并指定使用SockJS协议
             registry.addEndpoint("/ricky-websocket").withSockJS();
     }
 
